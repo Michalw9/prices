@@ -13,6 +13,6 @@ def find_price(store_page):
     for tag in  soup.find_all("script", {"type":"application/ld+json"}):
         parsed = json.loads(tag.text)
         if "offers" in parsed and "price" in parsed["offers"] and 'name' in parsed:
-            return [parsed['name'], parsed["offers"]["price"],parsed['gtin13']]             #[0] - Name [1] - Price [3] - EAN
+            return [parsed['name'], parsed["offers"]["price"],parsed['gtin13']]             #[0] - Name [1] - Price [2] - EAN
     return None
 print(find_price(strona1))
