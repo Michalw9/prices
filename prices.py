@@ -4,10 +4,6 @@ import json
 from gzip import decompress
 
 
-strona1 = "https://www.euro.com.pl/telewizory-led-lcd-plazmowe/sony-xr85z9jaep-8k-goole-tv-sony.bhtml"
-strona2 = "https://www.mediaexpert.pl/telewizory-i-rtv/telewizory/telewizor-lg-led-55nano883"
-strona3 = "https://mediamarkt.pl/rtv-i-telewizory/telewizor-lg-oled55a13la"
-
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
 
 def products_urls_list_euro():
