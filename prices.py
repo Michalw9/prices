@@ -7,7 +7,7 @@ from gzip import decompress
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
 
 
-def products_urls_list_euro():
+def products_urls_list_eur():
     sitemap_gz = requests.get("https://www.euro.com.pl/sitemap-produkty-rtv.xml.gz", headers={"User-Agent": user_agent})
     soup = BeautifulSoup(decompress(sitemap_gz.content), 'lxml')
     urls = soup.findAll("url")
@@ -72,3 +72,29 @@ def find_price(store_page):
             return [parsed['name'], parsed["offers"]["price"],parsed['gtin13']]             #[0] - Name [1] - Price [2] - EAN
     return None
 
+
+def make_dictionary_eur(n):
+    by_ean = {}
+    for product in products_urls_list_eur()[:n]:
+        temp = find_price(product)
+        by_ean[temp[2]] = [temp[0], temp[1]]
+    return by_ean
+
+
+def make_dictionary_msh(n):
+    by_ean = {}
+    for product in products_urls_list_msh()[:n]:
+        temp = find_price(product)
+        by_ean[temp[2]] = [temp[0][10:], temp[1]]
+    return by_ean
+
+
+def make_dictionary_mex(n):
+    by_ean = {}
+    for product in products_urls_list_mex()[:n]:
+        temp = find_price(product)
+        by_ean[temp[2]] = [' '.join(temp[0].split(sep = ' ')[1:3]), temp[1]]
+    return by_ean
+
+
+print(make_dictionary_mex(50))
