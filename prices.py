@@ -13,7 +13,9 @@ def products_urls_list_euro():
     urls = soup.findAll("url")
     url_list=[]
     for item in urls:
-        url_list.append(item.find("loc").text)
+        x = item.find("loc").text
+        if x.startswith('https://www.euro.com.pl/telewizory-led-lcd-plazmowe/'):
+            url_list.append(x)
     return url_list
 
 
@@ -51,7 +53,7 @@ def products_urls_list_msh():
     list = []
     last_page = msh_max_urls()
     while page <= last_page:
-        url = f"https://mediamarkt.pl/rtv-i-telewizory/telewizory/wszystkie-telewizory?limit=50&page={page}"
+        url = f"https://mediamarkt.pl/rtv-i-telewizory/telewizory/wszystkie-telewizory?{page}=1&limit=50"
         response = requests.get(url, headers={"User-Agent": user_agent})
         html = response.text
         soup = BeautifulSoup(html, "html.parser")
@@ -70,4 +72,3 @@ def find_price(store_page):
             return [parsed['name'], parsed["offers"]["price"],parsed['gtin13']]             #[0] - Name [1] - Price [2] - EAN
     return None
 
-print(products_urls_list_msh())
